@@ -21,8 +21,12 @@ export default {
       module: {
         rules: [
           {
-            test: /\.css$/i,
+            test: /\.scss$/i,
             use: ["style-loader", "css-loader"],
+          },
+          {
+            test: /\.css$/i,
+            use: ["style-loader", "sass-loader", "css-loader"],
           },
         ],
       },
