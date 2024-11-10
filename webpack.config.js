@@ -1,9 +1,9 @@
-import path from 'path'
+import path from 'path';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
+import { fileURLToPath } from 'url';
 
-
-const __filename = import.meta.filename;
-const __dirname = import.meta.dirname;
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export default {
     entry: './src/index.js',
@@ -13,27 +13,39 @@ export default {
     },
     devServer: {
         static: {
-          directory: path.join(__dirname, 'public'),
+            directory: path.join(__dirname, 'public'),
         },
         compress: true,
         port: 9000,
-      },
-      module: {
+    },
+    module: {
         rules: [
-          {
-            test: /\.scss$/i,
-            use: ["style-loader", "css-loader"],
-          },
-          {
-            test: /\.css$/i,
-            use: ["style-loader", "sass-loader", "css-loader"],
-          },
+            {
+                test: /\.scss$/, 
+                use: [
+                "style-loader", 
+                "css-loader", 
+                {
+                    loader: 'sass-loader',
+                    options: {
+                        sassOptions: {
+                            quietDeps: true,
+                        }
+                    }
+                }
+                
+                ]
+            },
+            {
+                test: /\.css$/, 
+                use: ['style-loader', 'css-loader'],
+            },
         ],
-      },
+    }, // Added comma here to separate `module` and `plugins`
     plugins: [
         new HtmlWebpackPlugin({
-            template: path.resolve(__dirname, 'src', 'index.html'), // Ensure this path matches your project structure
+            template: path.resolve(__dirname, 'src', 'index.html'),
             filename: 'index.html',
         }),
-    ],         
-}
+    ],
+};
