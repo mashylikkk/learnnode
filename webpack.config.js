@@ -23,29 +23,41 @@ export default {
             {
                 test: /\.scss$/, 
                 use: [
-                "style-loader", 
-                "css-loader", 
-                {
-                    loader: 'sass-loader',
-                    options: {
-                        sassOptions: {
-                            quietDeps: true,
+                    "style-loader", 
+                    "css-loader", 
+                    {
+                        loader: 'sass-loader',
+                        options: {
+                            sassOptions: {
+                                quietDeps: true,
+                            }
                         }
                     }
-                }
-                
                 ]
             },
             {
                 test: /\.css$/, 
                 use: ['style-loader', 'css-loader'],
             },
+            {
+                test: /\.njk$/,
+                use: [
+                    {
+                        loader: 'simple-nunjucks-loader',
+                        options: {}
+                    }
+                ]
+            }
         ],
-    }, // Added comma here to separate `module` and `plugins`
+    },
     plugins: [
+        // Use HtmlWebpackPlugin for index.njk and about.njk templates
         new HtmlWebpackPlugin({
-            template: path.resolve(__dirname, 'src', 'index.html'),
-            filename: 'index.html',
+            template: "./src/index.njk",
+        }),
+        new HtmlWebpackPlugin({
+            template: "./src/about.njk",
+            filename: 'about.html'
         }),
     ],
 };
