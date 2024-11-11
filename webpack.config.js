@@ -1,9 +1,13 @@
 import path from 'path';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import { fileURLToPath } from 'url';
+const __filename = import.meta.filename;
+const __dirname = import.meta.dirname;
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+let name = 'Mariia Kozyrenko';
+
+const response = await fetch('https://rickandmortyapi.com/api/character')
+const data = await response.json();
+const characters = data.results;
 
 export default {
     entry: './src/index.js',
@@ -21,10 +25,17 @@ export default {
     module: {
         rules: [
             {
-                test: /\.scss$/, 
+                test: /\.css$/i,
+                use: ["style-loader", "css-loader"],
+            },
+            {
+                test: /\.s[ac]ss$/i,
                 use: [
-                    "style-loader", 
-                    "css-loader", 
+                    // Creates `style` nodes from JS strings
+                    "style-loader",
+                    // Translates CSS into CommonJS
+                    "css-loader",
+                    // Compiles Sass to CSS
                     {
                         loader: 'sass-loader',
                         options: {
@@ -33,11 +44,7 @@ export default {
                             }
                         }
                     }
-                ]
-            },
-            {
-                test: /\.css$/, 
-                use: ['style-loader', 'css-loader'],
+                ],
             },
             {
                 test: /\.njk$/,
@@ -51,13 +58,15 @@ export default {
         ],
     },
     plugins: [
-        // Use HtmlWebpackPlugin for index.njk and about.njk templates
         new HtmlWebpackPlugin({
-            template: "./src/index.njk",
+            template: './src/index.njk',
+            templateParameters: {
+                name,characters
+            }   
         }),
         new HtmlWebpackPlugin({
-            template: "./src/about.njk",
+            template: './src/about.njk',
             filename: 'about.html'
         }),
     ],
-};
+}
