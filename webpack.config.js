@@ -8,6 +8,17 @@ let name = 'Mariia Kozyrenko';
 const response = await fetch('https://rickandmortyapi.com/api/character')
 const data = await response.json();
 const characters = data.results;
+const pages = [];
+characters.forEach(character => {
+    let page = new HtmlWebpackPlugin({
+        template: './src/about.njk',
+        filename: `character_${character.id}.html`,
+        templateParameters: {
+            character,
+        }
+    });
+    pages.push(page);
+});
 
 export default {
     entry: './src/index.js',
@@ -61,12 +72,13 @@ export default {
         new HtmlWebpackPlugin({
             template: './src/index.njk',
             templateParameters: {
-                name,characters
-            }   
+                name, characters
+            }
         }),
         new HtmlWebpackPlugin({
             template: './src/about.njk',
             filename: 'about.html'
         }),
+        ...pages
     ],
 }
