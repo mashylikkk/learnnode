@@ -5,7 +5,7 @@ const __dirname = import.meta.dirname;
 
 let name = 'Mariia Kozyrenko';
 
-const response = await fetch('https://rickandmortyapi.com/api/character')
+const response = await fetch('https://rickandmortyapi.com/api/character?page=12')
 const data = await response.json();
 const characters = data.results;
 
