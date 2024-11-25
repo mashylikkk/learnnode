@@ -2,7 +2,7 @@
 {% block content %}
     <div class="content">
         <h1>It works!</h1>
-        <h1>Hello {{ name }}!</h1>
+        <h1>Hello {{ name }}!!</h1>
         <div class="columns is-multiline">
             {% for character in characters %}
                 <div class="column is-one-quarter">
@@ -17,24 +17,28 @@
                         </div>
                         <div class="card-content">
                             <div class="content">
-                                <table class="table is-stripped">
+                                <table class="table is-hoverable">
                                     <tbody>
                                         <tr>
                                             <th>Status</th>
                                             <td>{{ character.status }}</td>
                                         </tr>
-                                        <th>Species</th>
-                                        <td>{{ character.species }}</td>
-                                    </tr>
-                                    <th>Gender</th>
-                                    <td>{{ character.gender }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <a class="button is-primary">Read More</a>
+                                        <tr>
+                                            <th>Species</th>
+                                            <td>{{ character.species }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Gender</th>
+                                            <td>{{ character.gender }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <a href="/character_{{ character.id }}.html" class="button is-primary">Read More</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            {% endfor %}
         </div>
-    {% endfor %}
-</div></div>{% endblock %}
+    </div>
+{% endblock %}

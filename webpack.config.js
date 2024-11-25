@@ -8,10 +8,12 @@ let name = 'Mariia Kozyrenko';
 const response = await fetch('https://rickandmortyapi.com/api/character')
 const data = await response.json();
 const characters = data.results;
+
+
 const pages = [];
 characters.forEach(character => {
     let page = new HtmlWebpackPlugin({
-        template: './src/about.njk',
+        template: './src/character.njk',
         filename: `character_${character.id}.html`,
         templateParameters: {
             character,
